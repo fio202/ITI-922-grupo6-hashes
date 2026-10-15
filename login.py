@@ -322,7 +322,7 @@ def listar_usuarios(ruta_bd=RUTA_BD):
 
 
 # ---------------------------------------------------------------------------
-# Usuarios de prueba
+# Usuarios de prueba y exportación
 # ---------------------------------------------------------------------------
 
 def generar_clave_aleatoria(largo=16):
@@ -365,6 +365,27 @@ def cargar_usuarios_prueba(ruta_bd=RUTA_BD):
         creado = registrar_usuario(usuario, clave, ruta_bd)
         resultado.append((usuario, clave, creado))
     return resultado
+
+
+def exportar_hashes(ruta_bd=RUTA_BD, carpeta=CARPETA_EXPORTADOS):
+    """
+    Escribe un archivo por esquema en la carpeta 'exportados/' con el
+    formato usuario:hash (una línea por usuario), que es el que lee
+    John the Ripper.
+
+    Devuelve la lista de rutas de los archivos creados.
+    """
+    carpeta = Path(carpeta)
+    carpeta.mkdir(exist_ok=True)
+    filas = listar_usuarios(ruta_bd)
+    rutas = []
+    for indice, esquema in enumerate(ESQUEMAS, start=1):   # columna 1..4 de la fila
+        ruta = carpeta / f"usuarios_{esquema}.txt"
+        with open(ruta, "w", encoding="utf-8") as archivo:
+            for fila in filas:
+                archivo.write(f"{fila[0]}:{fila[indice]}\n")
+        rutas.append(ruta)
+    return rutas
 
 
 # ---------------------------------------------------------------------------
@@ -415,6 +436,12 @@ def menu_cargar_prueba():
             print(f"  = {usuario:<10} ya existía, se omite")
 
 
+def menu_exportar():
+    """Exporta los hashes a la carpeta exportados/."""
+    for ruta in exportar_hashes():
+        print(f"  Creado: {ruta.relative_to(CARPETA_BASE)}")
+
+
 def main():
     """Muestra el menú principal en un ciclo hasta que se elija 0."""
     opciones = {
@@ -422,6 +449,7 @@ def main():
         "2": menu_iniciar_sesion,
         "3": menu_listar,
         "4": menu_cargar_prueba,
+        "5": menu_exportar,
     }
     while True:
         print(
@@ -438,9 +466,7 @@ def main():
             print("Hasta luego.")
             break
         accion = opciones.get(opcion)
-        if opcion == "5":
-            print("Pendiente: se implementa en el siguiente paso.")
-        elif accion:
+        if accion:
             accion()
         else:
             print("Opción no válida.")
