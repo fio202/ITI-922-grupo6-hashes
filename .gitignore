@@ -1,0 +1,23 @@
+# Entorno virtual de Python (cada quien lo crea con requirements.txt)
+venv/
+.venv/
+
+# Archivos compilados de Python
+__pycache__/
+*.pyc
+
+# Base de datos local con los hashes (se genera al ejecutar login.py)
+usuarios.db
+*.db
+
+# Hashes exportados (se generan con la opción 5 del menú)
+exportados/
+
+# Archivos de John the Ripper
+*.pot
+john.log
+
+# Archivos del sistema / editores
+.DS_Store
+.vscode/
+.idea/
