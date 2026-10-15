@@ -19,7 +19,9 @@ Solo se deben usar contraseñas de prueba inventadas.
 
 import hashlib
 import hmac
+import secrets
 import sqlite3
+import string
 import time
 from getpass import getpass
 from pathlib import Path
@@ -320,6 +322,52 @@ def listar_usuarios(ruta_bd=RUTA_BD):
 
 
 # ---------------------------------------------------------------------------
+# Usuarios de prueba
+# ---------------------------------------------------------------------------
+
+def generar_clave_aleatoria(largo=16):
+    """
+    Genera una clave aleatoria con el módulo secrets (criptográficamente
+    seguro, a diferencia de random).
+    """
+    alfabeto = string.ascii_letters + string.digits + "!@#$%&*-_+="
+    return "".join(secrets.choice(alfabeto) for _ in range(largo))
+
+
+def usuarios_de_prueba():
+    """
+    Devuelve la lista de (usuario, clave) de prueba, todas INVENTADAS.
+
+    carla y gabriela tienen la MISMA clave a propósito, para el
+    experimento de sal: igual MD5/SHA-256, pero distinto bcrypt/Argon2id.
+    """
+    return [
+        ("ana", "123456"),                     # la más común del mundo
+        ("bruno", "password"),                 # palabra de diccionario en inglés
+        ("carla", "costarica"),                # palabra local en minúsculas
+        ("diego", "Saprissa2026"),             # nombre + año
+        ("elena", "cartago2024"),              # palabra con números
+        ("fabian", "qwerty"),                  # patrón de teclado
+        ("gabriela", "costarica"),             # MISMA clave que carla
+        ("hector", "Pura_Vida!7"),             # mezcla con símbolo
+        ("ivan", generar_clave_aleatoria()),   # aleatoria de 16 caracteres
+    ]
+
+
+def cargar_usuarios_prueba(ruta_bd=RUTA_BD):
+    """
+    Registra los usuarios de prueba. Los que ya existen se omiten sin error.
+
+    Devuelve una lista de (usuario, clave, creado) donde creado es True/False.
+    """
+    resultado = []
+    for usuario, clave in usuarios_de_prueba():
+        creado = registrar_usuario(usuario, clave, ruta_bd)
+        resultado.append((usuario, clave, creado))
+    return resultado
+
+
+# ---------------------------------------------------------------------------
 # Menú de consola
 # ---------------------------------------------------------------------------
 
@@ -358,12 +406,22 @@ def menu_listar():
             print(f"  {esquema:<7}: {valor}")
 
 
+def menu_cargar_prueba():
+    """Carga los usuarios de prueba y muestra cuáles se crearon."""
+    for usuario, clave, creado in cargar_usuarios_prueba():
+        if creado:
+            print(f"  + {usuario:<10} creado   (clave de prueba: {clave})")
+        else:
+            print(f"  = {usuario:<10} ya existía, se omite")
+
+
 def main():
     """Muestra el menú principal en un ciclo hasta que se elija 0."""
     opciones = {
         "1": menu_registrar,
         "2": menu_iniciar_sesion,
         "3": menu_listar,
+        "4": menu_cargar_prueba,
     }
     while True:
         print(
@@ -380,7 +438,7 @@ def main():
             print("Hasta luego.")
             break
         accion = opciones.get(opcion)
-        if opcion in ("4", "5"):
+        if opcion == "5":
             print("Pendiente: se implementa en el siguiente paso.")
         elif accion:
             accion()
