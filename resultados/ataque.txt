@@ -1,0 +1,63 @@
+Diccionario cargado: 24 palabras.
+Usuarios en la base: 9
+
+=== MD5 ===
+Usuarios crackeados: 6 de 9
+   [ROTO] ana        -> 123456
+   [ROTO] bruno      -> password
+   [ROTO] carla      -> costarica
+   [ROTO] elena      -> cartago2024
+   [ROTO] fabian     -> qwerty
+   [ROTO] gabriela   -> costarica
+Intentos: 24
+Tiempo total: 0.0001 s
+Velocidad: 240,905.8 intentos/seg
+
+=== SHA256 ===
+Usuarios crackeados: 6 de 9
+   [ROTO] ana        -> 123456
+   [ROTO] bruno      -> password
+   [ROTO] carla      -> costarica
+   [ROTO] elena      -> cartago2024
+   [ROTO] fabian     -> qwerty
+   [ROTO] gabriela   -> costarica
+Intentos: 24
+Tiempo total: 0.0001 s
+Velocidad: 437,692.6 intentos/seg
+
+>>> Ahora bcrypt y Argon2id. Esto tarda unos segundos, es normal:
+  (atacando una muestra de 4 usuarios; cada intento es lento)
+  probando bcrypt contra 'ana'... ROTO -> 123456
+  probando bcrypt contra 'bruno'... ROTO -> password
+  probando bcrypt contra 'carla'... ROTO -> costarica
+  probando bcrypt contra 'diego'... resistio
+
+=== BCRYPT ===
+Usuarios crackeados: 3 de 4
+   [ROTO] ana        -> 123456
+   [ROTO] bruno      -> password
+   [ROTO] carla      -> costarica
+Intentos: 17
+Tiempo total: 10.8944 s
+Velocidad: 1.6 intentos/seg
+  (atacando una muestra de 4 usuarios; cada intento es lento)
+  probando argon2 contra 'ana'... ROTO -> 123456
+  probando argon2 contra 'bruno'... ROTO -> password
+  probando argon2 contra 'carla'... ROTO -> costarica
+  probando argon2 contra 'diego'... resistio
+
+=== ARGON2 ===
+Usuarios crackeados: 3 de 4
+   [ROTO] ana        -> 123456
+   [ROTO] bruno      -> password
+   [ROTO] carla      -> costarica
+Intentos: 17
+Tiempo total: 0.9542 s
+Velocidad: 17.8 intentos/seg
+
+--- CONCLUSION ---
+MD5 permite ~240,906 intentos/seg; bcrypt solo ~1.6.
+Atacar bcrypt es ~154,384 veces mas lento que atacar MD5.
+Con MD5/SHA-256 se crackearon las claves debiles al instante y a TODOS.
+Con bcrypt/Argon2id, cada intento cuesta tanto que solo se pudo atacar
+una muestra. Las claves fuertes y aleatorias no cayeron en ningun esquema.

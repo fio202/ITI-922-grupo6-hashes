@@ -1,0 +1,6 @@
+MD5       : 0.00122 ms por hash
+SHA-256   : 0.00113 ms por hash
+bcrypt    : 1009.15560 ms por hash
+Argon2id  : 54.85299 ms por hash
+Guardado: resultados/grafico_tiempos.png
+Guardado: resultados/grafico_intentos.png

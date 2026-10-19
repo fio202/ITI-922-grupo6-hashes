@@ -1,0 +1,26 @@
+carla y gabriela tienen la MISMA clave de prueba: 'costarica'.
+
+--- MD5 ---
+  carla    : 5d4e049c1dd1f28e22ac940fed008c2a
+  gabriela : 5d4e049c1dd1f28e22ac940fed008c2a
+  => IGUALES  (no usa sal: dos claves iguales dan el mismo hash)
+
+--- SHA256 ---
+  carla    : ca2796a1cd1b5785493468734cf77213c8bb491e16987fe303999d5eaa8cb0bd
+  gabriela : ca2796a1cd1b5785493468734cf77213c8bb491e16987fe303999d5eaa8cb0bd
+  => IGUALES  (no usa sal: dos claves iguales dan el mismo hash)
+
+--- BCRYPT ---
+  carla    : $2b$12$S0MYqC9fMD2ZjEAxR7AcBOJcePp.yuxkpCR5.jFOEriDw38gZnWFa
+  gabriela : $2b$12$BRE4AtkOJxOrygKmeTLuU.oRNBfE9VG2UR6j4hHhEz7Jggs3P2Dy2
+  => DISTINTOS (usa sal aleatoria por usuario)
+
+--- ARGON2 ---
+  carla    : $argon2id$v=19$m=19456,t=2,p=1$0ZC+oNYWHqjw1IItYwymCA$5ZMb2k2s/L0h+yOMvQyAnTrXO/fpoza0NpP7tgyxZbo
+  gabriela : $argon2id$v=19$m=19456,t=2,p=1$MU3+B7ZLqTTCawJGDlxzbg$SBAb6wpsrVlyxnSfUCTM8uDzjbJ9QjzpSjrrAflHFpo
+  => DISTINTOS (usa sal aleatoria por usuario)
+
+--- CONCLUSION ---
+Sin sal (MD5, SHA-256), la misma clave delata que dos usuarios la comparten
+y permite tablas precalculadas. Con sal (bcrypt, Argon2id), los hashes
+son distintos aunque la clave sea identica.

@@ -1,0 +1,15 @@
+Comparando 'costarica1' vs 'costarica2' (difieren en 1 caracter).
+
+--- MD5 ---
+  clave 1 ('costarica1') -> a50c609ac7db5602d807965f665b1c45
+  clave 2 ('costarica2') -> 5d51a1760f70fb2bac2ab4fb5bbac600
+  Bits distintos: 64 de 128  (50.0 %)
+
+--- SHA256 ---
+  clave 1 ('costarica1') -> ecb7467e393ce35a160d98a902b50043dc22079b4fa1d1ffe470966c2c4aede1
+  clave 2 ('costarica2') -> 9595bd54d2dc3256452b5b933c4df36e9013bc685e220ece5e679e2076a46950
+  Bits distintos: 129 de 256  (50.4 %)
+
+--- CONCLUSION ---
+Cambiar un solo caracter cambia cerca del 50 % de los bits del hash.
+Por eso no se puede adivinar la entrada 'acercandose' al hash objetivo.

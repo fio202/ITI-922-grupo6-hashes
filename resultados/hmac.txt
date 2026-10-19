@@ -1,0 +1,14 @@
+Mensaje original : Transferir 1000 colones a la cuenta 12345
+HMAC generado    : 72964dcf1dca4a65e4dba9b4a3236fd5e3e1c2f0e56434122293560c559435e6 
+
+--- Caso 1: mensaje intacto ---
+Verificacion: VALIDA (nadie lo altero) 
+
+--- Caso 2: mensaje alterado por un atacante ---
+Mensaje alterado : Transferir 9999 colones a la cuenta 67890
+Verificacion: FALLA (se detecto la alteracion) 
+
+--- CONCLUSION ---
+Con el mensaje intacto el HMAC verifica; si se altera el mensaje, falla.
+Sin la llave secreta, el atacante no puede fabricar un HMAC valido:
+HMAC da integridad Y autenticidad, no solo integridad como un hash suelto.
